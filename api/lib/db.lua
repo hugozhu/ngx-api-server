@@ -1,18 +1,21 @@
+-- 数据库操作类
+
 module(...,package.seeall)
 
-local db = {
+--每张报表保存在A，B两个数据库，正常情况随机选择一个库，A库导入的时候，则只选择B库查询
+local _db = {
     'a', 'b'
 }
 
 function get_backend(member_id, flag)
-    local hash = 1;
-    if flag == 'a' then
-        
-    elseif flag == 'b' then
-        
-    end 
+    local hash = 1; --todo: use member_id to get db hash    
+    if flag ~= 'a' or flag ~= 'b' then
+        flag = _db[math.random(1)]
+    end
+    return 'db-'..flag..'-'..hash    
 end
 
+--新生成一个SQL绑定变量
 function new_binding()
     local binding = {}
     binding.add_str = function (val)

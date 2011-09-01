@@ -1,6 +1,6 @@
 --引用公用模块
 debug = require("lib.debug") 
-cgi   = require("lib.cgi")
+CGI   = require("lib.CGI")
 db    = require("lib.db")
 date  = require("lib.date")
 crc32 = require("lib.crc32")
@@ -10,7 +10,7 @@ ngx.header['Server'] = ngx.var._server_name
 
 
 local action = require("actions.insight.adgroup")
-action.execute()
+action.execute(CGI:new())
 
 ngx.exit(200)
 

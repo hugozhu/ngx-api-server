@@ -1,7 +1,7 @@
 module(...,package.seeall)
 
-function execute()
-    local cust_id    = 1
+function execute(cgi)
+    local cust_id    = cgi:get_int('custid', 0)
     local start_date = date('2011-07-30')
     local end_date   = date('2011-09-30')
     
