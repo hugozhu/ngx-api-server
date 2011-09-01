@@ -1,4 +1,7 @@
+-- 类似servlet，一个worker只有一个对象
 module(...,package.seeall)
+
+local data = {} -- 注意这个变量是多个请求共享的
 
 function execute(cgi)
     local cust_id    = cgi:get_int('custid', 0)
@@ -22,6 +25,6 @@ function execute(cgi)
         binding.add(table, cust_id, where_date)
         next_month = next_month:addmonths(1)
     end
-    
+
     db.output(db.get_backend(cust_id,'ab'), sql, binding, ngx.var.arg_format)
 end

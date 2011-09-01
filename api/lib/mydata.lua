@@ -2,11 +2,11 @@ module(...,package.seeall)
 
 local mydata = {
     values = {},
-    name = ''
+    name = 'default'
 }
 
 function mydata:new ()
-    local o = {values={}}
+    local o = {values={val='6'}}
     setmetatable(o, self)    
     self.__index = self
     return o
