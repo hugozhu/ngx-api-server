@@ -5,8 +5,8 @@ local mydata = {
     name = ''
 }
 
-function mydata:new (o)
-    local o =  o or {} -- create object if user does not provide one setmetatable(o, self)
+function mydata:new ()
+    local o = {values={}}
     setmetatable(o, self)    
     self.__index = self
     return o
