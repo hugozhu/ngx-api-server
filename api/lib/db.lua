@@ -3,6 +3,7 @@
 module(...,package.seeall)
 
 --每张报表保存在A，B两个数据库，正常情况随机选择一个库，A库导入的时候，则只选择B库查询
+--通过redis的一个key对应的值来指定
 local _db = {
     'a', 'b'
 }
