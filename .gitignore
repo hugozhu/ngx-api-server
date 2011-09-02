@@ -10,3 +10,7 @@ api/lib/.DS_Store
 api/.DS_Store
 
 .DS_Store
+
+*.project
+*.cproject
+/.settings
