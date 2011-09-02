@@ -24,14 +24,12 @@ function CGI:new ()
 end
 
 function CGI:get_str(name, def)
-    if self.params[name] == nil then
-        self.params[name] = def
-    end
-    return self.params[name]
+    return self.params[name] or def
 end
 
 function CGI:get_int(name, def)
-    return tonumber(self:get_str(name, def))
+    def = tonumber(def) or 0
+    return tonumber(self:get_str(name)) or def
 end
 
 function CGI:send_error(code, msg)

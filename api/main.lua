@@ -1,12 +1,13 @@
 --引用公用模块
-DEBUG = require("lib.debug")
-db    = require("lib.db")
-date  = require("lib.date")
-crc32 = require("lib.crc32")
+_debug = require("lib.debug")
+db     = require("lib.db")
+date   = require("lib.date")
+crc32  = require("lib.crc32")
 
 --初始化
 ngx.header['Server'] = ngx.var._server_name
 local cgi = require("lib.CGI"):new()
+local token = cgi:get_str('token')
 
 local result, action = pcall(require, "actions.insight." .. ngx.var._module)
 if result == false then
@@ -16,4 +17,4 @@ elseif action.execute(cgi) then
 end
 
 --最后失败输出
-cgi.send_error(403, 'invalid access')
+cgi:send_error(403, 'invalid access')

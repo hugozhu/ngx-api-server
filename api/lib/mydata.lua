@@ -6,7 +6,8 @@ local mydata = {
 }
 
 function mydata:new ()
-    local o = {values={val='6'}}
+    --生成一个clone对象先，注意对table类型的字段需要重新初始化一次，或者会指向mydata.values初始化的那个table
+    local o = {values={}}
     setmetatable(o, self)    
     self.__index = self
     return o
