@@ -5,6 +5,7 @@ getmetatable(lib.CGI).__newindex = function (table, key, val)
             .. debug.traceback())
 end
 
+
 local CGI = {
     params = {}
 }
@@ -41,3 +42,4 @@ function CGI:send_error(code, msg)
 end
 
 return CGI
+

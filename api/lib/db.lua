@@ -57,7 +57,7 @@ end
 
 function parse_date_str(date_str)
     if (date_str) then
-        _,_,y,m,d=string.find(date_str, "(%d+)-(%d+)-(%d+)")
+        local _,_,y,m,d=string.find(date_str, "(%d+)-(%d+)-(%d+)")
         return tonumber(y),tonumber(m),tonumber(d)
     end
     return 0,0,0
@@ -71,12 +71,14 @@ function output(backend , sql, binding, fmt)
     end    
     
     ngx.var._backend = backend
-    
+
+    local location
     if fmt == 'csv' then
-        ngx.exec('/export_in_csv')
+        location = '/export_in_csv'
     else
-        ngx.exec('/export_in_json')
-    end    
+        location = '/export_in_json'
+    end
+    ngx.exec(location)
 end
 
 function query(backend , sql, binding)
