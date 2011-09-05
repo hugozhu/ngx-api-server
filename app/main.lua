@@ -1,8 +1,6 @@
 local action = ngx.ctx.action
 local cgi    = ngx.ctx.cgi
 
-local token = cgi:get_str('token')
-
 if action.execute(cgi) then
     ngx.exit(200)
 else
