@@ -1,16 +1,5 @@
-
-tmp/logs/nginx.pid
-
-tmp/logs/error.log
-
-tmp/logs/access.log
-
-api/lib/.DS_Store
-
-api/.DS_Store
-
+tmp
 .DS_Store
-
 *.project
 *.cproject
 /.settings
