@@ -34,7 +34,7 @@ if #session > 128 then
     cgi:send_error(403,"session data is too long")
 end
 
---123456789-1231231-crc32
+--1-1315215770-242eb5b9
 local fields = split('-', session)
 local sig = fields[#fields]
 fields[#fields]=config.session_secret
@@ -43,7 +43,17 @@ if sig_v~=sig then
     cgi:send_error(403,"session data can't be verified, should be "..sig_v)
 end
 
+local timestamp = fields[#fields-2]
+local now = ngx.time()
+
+if now - timestamp > 60 * 60 * 8 then
+    cgi:send_error(403,"session data is expired ".. (now - timestamp))
+end
+
 --传递主程序需要的变量
 ngx.ctx.action  = action
 ngx.ctx.cgi     = cgi
-ngx.ctx.session = session
+ngx.ctx.session = {
+    custid    = fields[1],
+    timestamp = fields[2]
+}
