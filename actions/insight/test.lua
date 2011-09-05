@@ -1,7 +1,9 @@
 module(...,package.seeall)
 
+local des56 = require("des56")
 
 function execute(cgi)
-    cgi:send_error(404, 'haha')
+    local a = cgi:get_str('txt')
+    db.output(db.get_backend(1,'ab'), 'show tables;', {} , 'csv')
     return true
 end

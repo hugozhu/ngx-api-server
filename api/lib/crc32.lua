@@ -41,9 +41,9 @@ local CRC32 = {
 function hash(str)
     local count = string.len(tostring(str))
     local crc = max
-    while count > 0 do
     local i = 1
-	local byte = string.byte(str, i)
+    while count > 0 do
+	    local byte = string.byte(str, i)
         crc = bit.bxor(bit.rshift(crc,8), CRC32[ bit.band(bit.bxor(crc,byte),0xff) + 1 ])
 	    count = count - 1
         i = i + 1
