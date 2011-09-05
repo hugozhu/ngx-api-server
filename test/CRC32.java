@@ -1,4 +1,5 @@
 import java.lang.Integer;
+import java.lang.String;
 import java.lang.System;
 
 public class CRC32 {
@@ -49,12 +50,16 @@ public class CRC32 {
         byte[] bytes = args[0].getBytes("UTF-8");
         int crc = 0xffffffff;
         for (byte b : bytes) {
-            System.out.println(Integer.toHexString(b));
+            //System.out.println(Integer.toHexString(b));
             crc = (crc >>> 8) ^ table[(crc ^ b) & 0xff];
         }
 
         // flip bits
         crc = crc ^ 0xffffffff;
+
+
+        System.out.println(String.format("%08x",crc));
+        System.exit(0);
 
         System.out.println("CRC32 (via table lookup)       = " + Integer.toHexString(crc));
 
