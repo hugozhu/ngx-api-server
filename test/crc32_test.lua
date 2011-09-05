@@ -1,4 +1,4 @@
-package.path = '../?.lua'
+require("base_test")
 
 function os.capture(cmd, raw)
   local f = assert(io.popen(cmd, 'r'))

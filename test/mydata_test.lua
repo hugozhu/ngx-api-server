@@ -1,4 +1,6 @@
-local mydata = require ('mydata')
+require("base_test")
+
+local mydata = require ('lib.mydata')
 
 local a = mydata:new()
 local b = mydata:new()

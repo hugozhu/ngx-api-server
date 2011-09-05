@@ -35,11 +35,8 @@ end
 
 function CGI:send_error(code, msg)
     -- hack: 把错误代码传递到错误页 error.lua
-    ngx.req.set_header('error-code',code)
     ngx.req.set_header('error-msg',msg)
-    
-    ngx.exit(403)    
+    ngx.exit(code)
 end
 
 return CGI
-

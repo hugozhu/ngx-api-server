@@ -1,12 +1,21 @@
 使用openresty实现的高性能Mysql接口服务器框架
 
 1. 安装配置
+    安装openresty稳定版
     依赖的lua库有：lua-cjson luabitop
     luarocks install lua-cjson
     luarocks install luabitop
 
-2. 框架对象说明
+2. 目录结构说明
+    app - 应用程序目录
+    lib - 框架类库目录
+    test- 测试用例目录
+    conf- nginx 配置目录
+    bin - 命令目录
 
-3. 集成到开发工具中，提高开发效率
+3. 框架对象说明
+
+
+4. 集成到开发工具中，提高开发效率
 	Lua on eclipse
 	TortorisGIT work well on Win7 and Fedora13

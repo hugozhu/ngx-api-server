@@ -2,11 +2,13 @@ ngx.header.content_type = "text/plain"
 ngx.header['Server'] = ngx.var._server_name
 
 if ngx.status == 0 then
-    ngx.status = 403
+    ngx.status = ngx.HTTP_FORBIDDEN
 end
 
+local json = require("cjson")
+
 if ngx.req.get_headers()["error-msg"] == nil then
-    ngx.print("error\n")
+    ngx.print(json.encode({error = "service not availible"}))
 else
-    ngx.print("error: " .. ngx.req.get_headers()["error-msg"].."\n")
+    ngx.print(json.encode({error = ngx.req.get_headers()["error-msg"]}))
 end

@@ -81,6 +81,7 @@ end
 
 function dump(value)
     ngx.print(serialise_value(value))
+    ngx.exit(200)
 end
 
 function log(value)
