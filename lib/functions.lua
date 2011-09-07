@@ -1,3 +1,9 @@
+local string = require("string")
+local table  = require("table")
+
+module(...)
+
+
 function not_nil_string(s, def)
     def = def or ''
     if s == nil then

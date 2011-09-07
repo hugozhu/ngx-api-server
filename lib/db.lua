@@ -8,12 +8,17 @@ local _db = {
     'a', 'b'
 }
 
-function get_backend(member_id, flag)
-    local hash = 1; --todo: use member_id to get db hash    
-    if flag ~= 'a' or flag ~= 'b' then
-        flag = _db[math.random(1)]
-    end
-    return 'db-'..flag..'-'..hash    
+
+function table_name(t)
+    return ngx.ctx.database.."."..t
+end
+
+function database()
+    return ngx.ctx.database
+end
+
+function backend()
+    return ngx.ctx.backend
 end
 
 --新生成一个SQL绑定变量
@@ -63,14 +68,14 @@ function parse_date_str(date_str)
     return 0,0,0
 end
 
-function output(backend , sql, binding, fmt)
+function output(mybackend , sql, binding, fmt)
     if binding == nil then
         ngx.var._sql = sql
     else
         ngx.var._sql = string.format(sql, unpack(binding))
-    end    
-    
-    ngx.var._backend = backend
+    end
+
+    ngx.var._backend = mybackend
 
     local location
     if fmt == 'csv' then
@@ -78,6 +83,7 @@ function output(backend , sql, binding, fmt)
     else
         location = '/export_in_json'
     end
+
     ngx.exec(location)
 end
 

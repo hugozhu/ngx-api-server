@@ -11,7 +11,15 @@ function new (t)
     local o = {}
     local mt = {
       __index = t,
-      __newindex = function (t,v,k) error("attemp to change config") end
+      __newindex = function (t,v,k) error("attemp to change config") end,
+      __tostring = function()
+            local str = '{'
+            for k,v in pairs(o) do
+                str = "\n"..str .. k
+            end
+            str = str .. '}'
+            return str
+      end
     }
     setmetatable(o, mt)
     return o

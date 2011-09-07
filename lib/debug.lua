@@ -80,7 +80,7 @@ function serialise_value(value, indent, depth)
 end
 
 function dump(value)
-    ngx.print(serialise_value(value))
+    ngx.print(serialise_value(value).."\n")
     ngx.exit(200)
 end
 

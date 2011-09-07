@@ -7,12 +7,11 @@ end
 
 
 local CGI = {
-    params = {},
-    session = {}
+    params = {}
 }
 
 function CGI:new ()
-    local o = {params = {}, session={}}
+    local o = {params = {}}
     for key, val in pairs(ngx.req.get_uri_args()) do
         if type(val) == "table" then
             o.params[key] = table.concat(val, ", ")

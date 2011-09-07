@@ -1,6 +1,6 @@
 module(...,package.seeall)
 
 function execute(cgi)
-    db.output(db.get_backend(1,'ab'), 'show tables;', {} , 'csv')
+    db.output('db-1', 'show tables;', {} , 'csv')
     return true
 end

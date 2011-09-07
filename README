@@ -5,6 +5,7 @@
     依赖的lua库有：lua-cjson luabitop
     luarocks install lua-cjson
     luarocks install luabitop
+    mkdir tmp/logs 创建nginx日志目录
 
 2. 目录结构说明
     app - 应用程序目录
@@ -12,6 +13,7 @@
     test- 测试用例目录
     conf- nginx 配置目录
     bin - 命令目录
+
 
 3. 框架对象说明
 
