@@ -87,13 +87,13 @@ function output(mybackend , sql, binding, fmt)
     ngx.exec(location)
 end
 
-function query(backend , sql, binding)
+function query(mybackend , sql, binding)
     if  binding == nil then
         ngx.var._sql = sql
     else
         ngx.var._sql = string.format(sql, unpack(binding))
     end
-    ngx.var._backend = backend    
+    ngx.var._backend = mybackend
     
     return ngx.location.capture('/export_in_rds')   
 end
