@@ -6,37 +6,52 @@
 _G['config'] = require("lib.Config").new({
     debug = true,
     session_secret = 'taobao_BP_API_0.1',
+    redis_servers = {
+        {host = '127.0.0.1:6379'},
+        {host = 'localhost:6379'},
+    },
     database_prefix = 'insight_',
-    databases = {
+    database_servers = {
         db_1 = {
+            server_a   = 'localhost',
+            server_b   = 'localhost2',
+            username   = 'root',
+            password   = '',
             hash_range = {{1,125}, {901,910}, {981,982}},
         },
 
         db_2 = {
+            server_a   = 'localhost',
             hash_range = {{126,250}, {911,920}, {983,984}},
         },
 
         db_3 = {
+            server_a   = 'localhost',
             hash_range = {{251,375}, {921,930}, {985,986}},
         },
 
         db_4 = {
+            server_a   = 'localhost',
             hash_range = {{376,400}, {931,940}, {987,988}},
         },
 
         db_5 = {
+            server_a   = 'localhost',
             hash_range = {{401,525}, {941,950}, {989,990}},
         },
 
         db_6 = {
+            server_a   = 'localhost',
             hash_range = {{526,650}, {951,960}, {991,994}},
         },
 
         db_7 = {
+            server_a   = 'localhost',
             hash_range = {{651,775}, {961,970}, {995,997}},
         },
 
-        db_7 = {
+        db_8 = {
+            server_a   = 'localhost',
             hash_range = {{776,900}, {971,980}, {998,1000}},
         },
     }
@@ -56,7 +71,7 @@ _G.get_db_info = function (custid)
 
     --一共拆分成1000个数据库
     local hash = custid % 1000
-    for k, v in pairs(config.databases) do
+    for k, v in pairs(config.database_servers) do
         for i, range in ipairs(v.hash_range) do
             if hash >= range[1] and hash <= range[2] then
                 db = k
