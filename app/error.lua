@@ -1,3 +1,6 @@
+--[[
+--出错页面
+--]]
 ngx.header.content_type = "text/plain"
 ngx.header['Server'] = ngx.var._server_name
 
