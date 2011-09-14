@@ -1,3 +1,4 @@
+#!/usr/bin/env lua
 ---
 -- Created by IntelliJ IDEA.
 -- User: hugozhu
@@ -6,3 +7,25 @@
 -- To change this template use File | Settings | File Templates.
 --
 
+local template = require("lib.Template")
+local app = require("app/global")
+
+comment = '#'
+
+local input = io.read("*all")
+local output = ''
+
+local result, message = template.preprocess(
+    {
+        input  = input,
+        output = output,
+        lookup = _G,
+        strict=strict,
+    }
+)
+
+if message then
+    error(message)
+else
+    io.write(result)
+end

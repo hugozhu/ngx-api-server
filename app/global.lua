@@ -6,15 +6,17 @@
 _G['config'] = require("lib.Config").new({
     debug = true,
     session_secret = 'taobao_BP_API_0.1',
+    session_timeout = 60 * 60 * 8,
     redis_servers = {
         {host = '127.0.0.1:6379'},
         {host = 'localhost:6379'},
     },
+
     database_prefix = 'insight_',
     database_servers = {
-        db_1 = {
+        ['db_1'] = {
             server_a   = 'localhost',
-            server_b   = 'localhost2',
+            server_b   = '127.0.0.1',
             username   = 'root',
             password   = '',
             hash_range = {{1,125}, {901,910}, {981,982}},
@@ -61,8 +63,8 @@ local _db_flags = {'a', 'b' }
 
 -- 返回传入用户对应的数据库分库，以及该分库所位于的主机ID
 _G.get_db_info = function (custid)
-    if type(custid)~='number' then
-        error("wrong argument custid "..custid)
+    if custid==nil or type(custid)~='number' then
+        error("wrong argument custid, must be number")
     end
 
     local parser = require "redis.parser"
@@ -71,10 +73,13 @@ _G.get_db_info = function (custid)
 
     --一共拆分成1000个数据库
     local hash = custid % 1000
+    if hash == 0 then hash = 1000 end
+
     for k, v in pairs(config.database_servers) do
         for i, range in ipairs(v.hash_range) do
             if hash >= range[1] and hash <= range[2] then
                 db = k
+                break
             end
         end
     end
@@ -90,7 +95,7 @@ _G.get_db_info = function (custid)
     local flag = res or 'ab'
 
     if flag ~= 'a' or flag ~= 'b' then
-        flag = _db_flags[math.random(1)]
+        flag = _db_flags[math.random(2)]
     end
 
     return config.database_prefix..hash, db..'_'..flag

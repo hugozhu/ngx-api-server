@@ -27,7 +27,7 @@ end
 local cgi = require("lib.CGI"):new()
 
 --Verify user session
-local session = ngx.var.arg_session or not_nil_string(ngx.var.cookie_session)
+local session = ngx.var.arg_session or util.not_nil_string(ngx.var.cookie_session)
 
 if util.is_empty_string(session) then
     cgi:send_error(403,"session data is required")
@@ -54,11 +54,11 @@ if not config.debug then
 
     local custid = tonumber(fields[1])
 
-    if custid < 1 then
+    if custid == nil or custid < 1 then
        cgi:send_error(403,"empty custid")
     end
 
-    if now == nil or now - timestamp > 60 * 60 * 8 then
+    if now == nil or now - timestamp > config.session_timeout then
         cgi:send_error(403,"session data is expired ".. (now - timestamp))
     end
 end

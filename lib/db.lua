@@ -65,35 +65,54 @@ function parse_date_str(date_str)
         local _,_,y,m,d=string.find(date_str, "(%d+)-(%d+)-(%d+)")
         return tonumber(y),tonumber(m),tonumber(d)
     end
-    return 0,0,0
+    return 1977,1,1
 end
 
 function output(mybackend , sql, binding, fmt)
-    if binding == nil then
-        ngx.var._sql = sql
-    else
-        ngx.var._sql = string.format(sql, unpack(binding))
+    if binding ~= nil then
+        sql = string.format(sql, unpack(binding))
     end
-
-    ngx.var._backend = mybackend
-
     local location
     if fmt == 'csv' then
-        location = '/export_in_csv'
+        location = '/mysql_to_csv'
     else
-        location = '/export_in_json'
-    end
-
-    ngx.exec(location)
-end
-
-function query(mybackend , sql, binding)
-    if  binding == nil then
-        ngx.var._sql = sql
-    else
-        ngx.var._sql = string.format(sql, unpack(binding))
+        location = '/mysql_to_json'
     end
     ngx.var._backend = mybackend
-    
-    return ngx.location.capture('/export_in_rds')   
+    ngx.var._sql     = sql
+    ngx.exec(location)
+    --ngx.exec 不能POST，所以通过变量传递
+    --ngx.exec(location,'backend='..mybackend..'&sql='..ngx.escape_uri(sql))
+end
+
+
+--
+function query(mybackend , sql, binding)
+    if binding ~= nil then
+        sql = string.format(sql, unpack(binding))
+    end
+
+    --ngx.location.capture 不能继承ngx.var.arg，所以通过POST变量传递
+    local res = ngx.location.capture('/mysql_to_rds',
+                {
+                    method=ngx.HTTP_POST,
+                    body=sql,
+                    args={backend=mybackend,sql=sql}
+                }
+            )
+
+    if res.status == 200 or res.status == 201 then
+         if res.body == nil then
+             return error("nothing returned by db")
+         end
+         return res.body
+    end
+
+    if res.status == 504 then
+        local tid = res.header["X-Mysql-Tid"]
+        if tid then
+            tid = tonumber(tid)
+            ngx.location.capture('/export_in_json',{ args={backend=mybackend,sql='kill query '..tid} })
+        end
+    end
 end

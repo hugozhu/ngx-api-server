@@ -19,6 +19,9 @@ function new (t)
             end
             str = str .. '}'
             return str
+      end,
+      copy = function()
+            return t
       end
     }
     setmetatable(o, mt)
