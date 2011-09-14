@@ -32,5 +32,10 @@ clean:
 dev: LUA+= app.config.dev
 dev: all
 
+#生成测试环境的配置
+test: LUA+= app.config.dev app.config.test
+test: all
+
 #生成生产环境的配置
+cm4: LUA+= app.config.cm4
 cm4: all
