@@ -21,3 +21,8 @@
 4. 集成到开发工具中，提高开发效率
 	Lua on eclipse
 	TortorisGIT work well on Win7 and Fedora13
+
+5. make 命令
+	make debug   -- 生成开发环境的配置
+	make release -- 生成生产环境的配置
+	make restart -- 重新启动nginx

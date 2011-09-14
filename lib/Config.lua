@@ -20,10 +20,9 @@ function new (t)
             str = str .. '}'
             return str
       end,
-      copy = function()
-            return t
-      end
     }
+    o.copy = t
     setmetatable(o, mt)
     return o
 end
+

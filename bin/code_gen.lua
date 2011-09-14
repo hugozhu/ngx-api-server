@@ -8,7 +8,10 @@
 --
 
 local template = require("lib.Template")
-local app = require("app/global")
+
+for i,v in ipairs(arg) do
+    require(v)
+end
 
 comment = '#'
 

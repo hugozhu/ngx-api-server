@@ -80,6 +80,11 @@ function output(mybackend , sql, binding, fmt)
     end
     ngx.var._backend = mybackend
     ngx.var._sql     = sql
+
+    if config.debug then
+        _debug.log(mybackend..': '..sql)
+    end
+
     ngx.exec(location)
     --ngx.exec 不能POST，所以通过变量传递
     --ngx.exec(location,'backend='..mybackend..'&sql='..ngx.escape_uri(sql))
@@ -90,6 +95,10 @@ end
 function query(mybackend , sql, binding)
     if binding ~= nil then
         sql = string.format(sql, unpack(binding))
+    end
+
+    if config.debug then
+        _debug.log(mybackend..': '..sql)
     end
 
     --ngx.location.capture 不能继承ngx.var.arg，所以通过POST变量传递

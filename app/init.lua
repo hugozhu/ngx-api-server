@@ -9,7 +9,11 @@ db     = require("lib.db")
 date   = require("lib.date")
 
 --引用应用全局变量
-require("app.global")
+require("app.config.base")
+
+if ngx.var.CLUSTER ~='' then
+    require("app.config."..ngx.var.CLUSTER)
+end
 
 --初始化
 ngx.header['Server'] = ngx.var._server_name

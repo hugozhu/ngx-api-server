@@ -26,8 +26,7 @@ function execute(cgi)
         next_month = next_month:addmonths(1)
     end
 
-    local rds = db.query(db.backend(), sql, binding, ngx.var.arg_format)
-    ngx.print("hello")
+    db.output(db.backend(), sql, binding, ngx.var.arg_format)
 
     return true
 end

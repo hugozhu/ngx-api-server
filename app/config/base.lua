@@ -3,13 +3,18 @@
 --根据用户的ID以及redis中的读写库设置（custid 或 memberid）来获得数据库连接ID
 
 --只读配置
-_G['config'] = require("lib.Config").new({
-    debug = true,
+_G['config'] = {
+    cluster = '',
+    debug = false,
     session_secret = 'taobao_BP_API_0.1',
     session_timeout = 60 * 60 * 8,
+
+    nginx = {
+        port=80,
+    },
+
     redis_servers = {
-        {host = '127.0.0.1:6379'},
-        {host = 'localhost:6379'},
+
     },
 
     database_prefix = 'insight_',
@@ -57,7 +62,7 @@ _G['config'] = require("lib.Config").new({
             hash_range = {{776,900}, {971,980}, {998,1000}},
         },
     }
-})
+}
 
 local _db_flags = {'a', 'b' }
 
