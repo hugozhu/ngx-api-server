@@ -23,6 +23,6 @@
 	TortorisGIT work well on Win7 and Fedora13
 
 5. make 命令
-	make debug   -- 生成开发环境的配置
-	make release -- 生成生产环境的配置
-	make restart -- 重新启动nginx
+	make clean dev   -- 生成开发环境的配置
+	make clean test  -- 生成测试环境的配置
+	make restart 	 -- 重新启动nginx

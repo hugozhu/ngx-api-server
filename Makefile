@@ -1,8 +1,14 @@
 CLUSTER=
+
+#commands
+ECHO=echo
+ifeq "`uname | grep Darwin | wc -l`" "1"
+ECHO=echo -en
+endif
 LUA=bin/code_gen.lua app.config.base
 
-
 all: conf tmp conf/nginx.conf
+
 
 tmp:
 	mkdir tmp
@@ -15,7 +21,7 @@ conf/nginx.conf: app/config/*.lua templates/conf/*.conf
 	@TPLS=`find templates -type f | grep -e .conf$$`;\
 	for file in $$TPLS ; do \
 		output=`echo $$file | cut -c 11-`;\
-		echo "\033[31m$$file \033[0m-> \033[32m$$output\033[0m";\
+		$(ECHO) "\033[31m$$file \033[0m-> \033[32m$$output\033[0m";\
 		$(LUA) < $$file > $$output;\
 	done
 
