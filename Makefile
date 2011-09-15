@@ -1,9 +1,9 @@
 CLUSTER=
 
 #commands
-ECHO=echo
+ECHO=echo -e
 ifeq "`uname | grep Darwin | wc -l`" "1"
-ECHO=echo -en
+ECHO=echo
 endif
 LUA=bin/code_gen.lua app.config.base
 
