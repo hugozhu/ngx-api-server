@@ -81,9 +81,7 @@ function output(mybackend , sql, binding, fmt)
     ngx.var._backend = mybackend
     ngx.var._sql     = sql
 
-    if config.debug then
-        _debug.log(mybackend..': '..sql)
-    end
+    log.debug(mybackend..': '..sql)
 
     ngx.exec(location)
     --ngx.exec 不能POST，所以通过变量传递
@@ -97,9 +95,7 @@ function query(mybackend , sql, binding)
         sql = string.format(sql, unpack(binding))
     end
 
-    if config.debug then
-        _debug.log(mybackend..': '..sql)
-    end
+    log.debug(mybackend..': '..sql)
 
     --ngx.location.capture 不能继承ngx.var.arg，所以通过POST变量传递
     local res = ngx.location.capture('/mysql_to_rds',

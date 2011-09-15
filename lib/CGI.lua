@@ -1,4 +1,3 @@
-require("lib.date")
 module(..., package.seeall)
 
 getmetatable(lib.CGI).__newindex = function (table, key, val)
@@ -6,6 +5,7 @@ getmetatable(lib.CGI).__newindex = function (table, key, val)
             .. debug.traceback())
 end
 
+local date = require("lib.date")
 
 local CGI = {
     params = {}
@@ -35,7 +35,7 @@ function CGI:get_int(name, def)
 end
 
 function CGI:get_date(name, def)
-    return date(cgi:get_str(name, def))
+    return date(self:get_str(name, def))
 end
 
 

@@ -2,14 +2,12 @@
 --此文件将在nginx的请求access阶段被执行，此阶段进行必要的安全校验，尽早拒绝无效请求
 --]]
 
---引用公用模块
-util   = require("lib.functions")
-_debug = require("lib.debug")
-db     = require("lib.db")
-date   = require("lib.date")
-
 --引用应用全局变量
 require("app.config.base")
+
+--引用公用模块
+util   = require("lib.functions")
+db     = require("lib.db")
 
 if ngx.var.CLUSTER ~='' then
     require("app.config."..ngx.var.CLUSTER)
@@ -50,7 +48,8 @@ if not config.debug then
 
     local sig_v = require("lib.CRC32").hash(table.concat(fields))
     if sig_v~=sig then
-        cgi:send_error(403,"session data can't be verified, should be "..sig_v)
+        log.error("session signature not match with "..tostring(sig_v))
+        cgi:send_error(403,"invalid session signature")
     end
 
     local timestamp = tonumber(fields[#fields-1])
@@ -59,11 +58,12 @@ if not config.debug then
     local custid = tonumber(fields[1])
 
     if custid == nil or custid < 1 then
-       cgi:send_error(403,"empty custid")
+        log.error("session signature not match with "..tostring(sig_v))
+        cgi:send_error(403,"empty custid in session")
     end
 
     if now == nil or now - timestamp > config.session_timeout then
-        cgi:send_error(403,"session data is expired ".. (now - timestamp))
+        cgi:send_error(403,"session is expired ".. (now - timestamp))
     end
 end
 

@@ -5,8 +5,8 @@ local data = {} -- 注意这个变量是多个请求共享的
 
 function execute(cgi)
     local cust_id    = cgi.session.custid
-    local start_date = date(cgi:get_str('start_date','2011-07-30'))
-    local end_date   = date(cgi:get_str('end_date','2011-09-30'))
+    local start_date = cgi:get_date('start_date','2011-07-30')
+    local end_date   = cgi:get_date('end_date','2011-09-30')
 
     --SQL绑定变量
     local binding = db.new_binding()

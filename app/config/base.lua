@@ -3,7 +3,7 @@
 --根据用户的ID以及redis中的读写库设置（custid 或 memberid）来获得数据库连接ID
 
 --只读配置
-_G['config'] = {
+_G.config = {
     cluster = 'base',
     debug = false,
     session_secret = 'taobao_BP_API_0.1',
@@ -18,53 +18,18 @@ _G['config'] = {
     },
 
     database_prefix = 'insight_',
+
     database_servers = {
-        ['db_1'] = {
-            server_a   = 'localhost',
-            server_b   = '127.0.0.1',
-            username   = 'root',
-            password   = '',
-            hash_range = {{1,125}, {901,910}, {981,982}},
-        },
 
-        db_2 = {
-            server_a   = 'localhost',
-            hash_range = {{126,250}, {911,920}, {983,984}},
-        },
-
-        db_3 = {
-            server_a   = 'localhost',
-            hash_range = {{251,375}, {921,930}, {985,986}},
-        },
-
-        db_4 = {
-            server_a   = 'localhost',
-            hash_range = {{376,400}, {931,940}, {987,988}},
-        },
-
-        db_5 = {
-            server_a   = 'localhost',
-            hash_range = {{401,525}, {941,950}, {989,990}},
-        },
-
-        db_6 = {
-            server_a   = 'localhost',
-            hash_range = {{526,650}, {951,960}, {991,994}},
-        },
-
-        db_7 = {
-            server_a   = 'localhost',
-            hash_range = {{651,775}, {961,970}, {995,997}},
-        },
-
-        db_8 = {
-            server_a   = 'localhost',
-            hash_range = {{776,900}, {971,980}, {998,1000}},
-        },
     }
 }
 
 local _db_flags = {'a', 'b' }
+
+_G.log = {
+    debug=function(s) end,
+    error=function(s) ngx.log(ngx.ERR, tostring(s)) end
+}
 
 -- 返回传入用户对应的数据库分库，以及该分库所位于的主机ID
 _G.get_db_info = function (custid)
