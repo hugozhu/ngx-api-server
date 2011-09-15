@@ -1,8 +1,8 @@
 config = _G.config
 
-config.debug = true
-
 config.cluster = 'dev'
+
+config.debug = true
 
 config.nginx.port = 8080
 

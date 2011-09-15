@@ -4,7 +4,7 @@
 
 --只读配置
 _G['config'] = {
-    cluster = '',
+    cluster = 'base',
     debug = false,
     session_secret = 'taobao_BP_API_0.1',
     session_timeout = 60 * 60 * 8,

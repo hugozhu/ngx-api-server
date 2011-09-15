@@ -1,24 +1,26 @@
 CLUSTER=
+OS=$(shell uname)
 
 #commands
 ECHO=echo -e
-ifeq "`uname | grep Darwin | wc -l`" "1"
-ECHO=echo
+ifeq ("$(OS)","Darwin")
+	ECHO=echo
 endif
+
 LUA=bin/code_gen.lua app.config.base
 
 all: conf tmp conf/nginx.conf
-
 
 tmp:
 	mkdir tmp
 	mkdir tmp/logs
 
 conf:
-	mkdir conf
+	@mkdir conf
 
 conf/nginx.conf: app/config/*.lua templates/conf/*.conf
-	@TPLS=`find templates -type f | grep -e .conf$$`;\
+	@echo "Generate nginx config files...";\
+	TPLS=`find templates -type f | grep -e .conf$$`;\
 	for file in $$TPLS ; do \
 		output=`echo $$file | cut -c 11-`;\
 		$(ECHO) "\033[31m$$file \033[0m-> \033[32m$$output\033[0m";\
@@ -39,7 +41,7 @@ dev: LUA+= app.config.dev
 dev: all
 
 #生成测试环境的配置
-test: LUA+= app.config.dev app.config.test
+test: LUA+= app.config.test
 test: all
 
 #生成生产环境的配置

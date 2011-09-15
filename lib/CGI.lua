@@ -1,3 +1,4 @@
+require("lib.date")
 module(..., package.seeall)
 
 getmetatable(lib.CGI).__newindex = function (table, key, val)
@@ -32,6 +33,11 @@ function CGI:get_int(name, def)
     def = tonumber(def) or 0
     return tonumber(self:get_str(name)) or def
 end
+
+function CGI:get_date(name, def)
+    return date(cgi:get_str(name, def))
+end
+
 
 function CGI:send_error(code, msg)
     -- hack: 把错误代码传递到错误页 error.lua
