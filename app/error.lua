@@ -11,7 +11,7 @@ end
 local json = require("cjson")
 
 if ngx.req.get_headers()["error-msg"] == nil then
-    ngx.print(json.encode({error = "service not availible"}))
+    ngx.print(json.encode({error = "service not availible "..ngx.status}))
 else
     ngx.print(json.encode({error = ngx.req.get_headers()["error-msg"]}))
 end

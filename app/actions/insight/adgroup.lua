@@ -6,7 +6,21 @@ local data = {} -- 注意这个变量是多个请求共享的
 function execute(cgi)
     local cust_id    = cgi.session.custid
     local start_date = cgi:get_date('start_date','2011-07-30')
-    local end_date   = cgi:get_date('end_date','2011-09-30')
+    local end_date   = cgi:get_date('end_date','2011-08-30')
+
+    local today = cgi:today()
+
+    if (end_date-today):spandays() > -1 then
+        cgi:send_error(404, "invalid end_date")
+    end
+
+    if (today-start_date):spandays() > 30 then
+        cgi:send_error(404, "invalid start_date")
+    end
+
+    if (end_date-start_date):spandays() > 90 then
+        cgi:send_error(404, "too many days")
+    end
 
     --SQL绑定变量
     local binding = db.new_binding()

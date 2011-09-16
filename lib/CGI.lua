@@ -35,14 +35,23 @@ function CGI:get_int(name, def)
 end
 
 function CGI:get_date(name, def)
-    return date(self:get_str(name, def))
+    local s   = self:get_str(name,"")
+    local i,j = string.find(test,"%d%d%d%d%-[01]+[%d]?-[0123]+[%d]?")
+    if i==1 and j==string.len(s) then
+        return date(s)
+    end
+    return nil
 end
 
+function CGI:today()
+    return date()
+end
 
 function CGI:send_error(code, msg)
     -- hack: 把错误代码传递到错误页 error.lua
+    ngx.status = code
     ngx.req.set_header('error-msg',msg)
-    ngx.exit(code)
+    ngx.exec("/error")
 end
 
 return CGI
