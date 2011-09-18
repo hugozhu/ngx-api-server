@@ -21,6 +21,6 @@ end
 
 
 local today = date()
-
+today:adddays(-1)
 print(today)
 
