@@ -22,5 +22,7 @@ end
 
 local today = date()
 
+today:setday(-1)
+
 print(today)
 
