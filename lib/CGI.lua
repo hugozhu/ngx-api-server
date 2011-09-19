@@ -35,16 +35,31 @@ function CGI:get_int(name, def)
 end
 
 function CGI:get_date(name, def)
-    local s   = self:get_str(name,"")
-    local i,j = string.find(test,"%d%d%d%d%-[01]+[%d]?-[0123]+[%d]?")
+    local default_date = def
+    if def~=nil and type(def) == 'string' then
+        default_date = date(def)
+    end
+    local s   = self:get_str(name)
+    if s == nil then
+        return default_date
+    end
+    local i,j = string.find(s,"%d%d%d%d%-[01]+[%d]?-[0123]+[%d]?")
     if i==1 and j==string.len(s) then
         return date(s)
     end
-    return nil
+    return default_date
 end
 
 function CGI:today()
-    return date()
+    local today =  date()
+    today:sethours(0,0,0,0)
+    return today
+end
+
+function CGI:yesterday()
+    local yesterday = self.today()
+    yesterday:adddays(-1)
+    return yesterday
 end
 
 function CGI:send_error(code, msg)

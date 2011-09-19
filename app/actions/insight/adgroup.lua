@@ -4,22 +4,20 @@ module(...,package.seeall)
 local data = {} -- 注意这个变量是多个请求共享的
 
 function execute(cgi)
+    local yesterday = cgi:yesterday()
+
     local cust_id    = cgi.session.custid
-    local start_date = cgi:get_date('start_date','2011-07-30')
-    local end_date   = cgi:get_date('end_date','2011-08-30')
+    local start_date = cgi:get_date('start_date', yesterday)  -- 缺省为昨天
+    local end_date   = cgi:get_date('end_date', yesterday)    -- 缺省为昨天
 
-    local today = cgi:today()
-
-    if (end_date-today):spandays() > -1 then
+    --结束日期最大为昨天
+    if (end_date-yesterday):spandays() > 0 then
         cgi:send_error(404, "invalid end_date")
     end
 
-    if (today-start_date):spandays() > 30 then
+    --开始日期最大为30天前
+    if (yesterday-start_date):spandays() > 30 then
         cgi:send_error(404, "invalid start_date")
-    end
-
-    if (end_date-start_date):spandays() > 90 then
-        cgi:send_error(404, "too many days")
     end
 
     --SQL绑定变量

@@ -1,10 +1,12 @@
-_G.log.debug = function(s) ngx.log(ngx.ERR, "[ debug ]\n"..tostring(s).."\n") end
+_G.log.debug = function(s) ngx.log(ngx.ERR, ngx.var.remote_addr.." [ debug ]\n"..tostring(s).."\n") end
 
 config = _G.config
 
 config.cluster = 'dev'
 
 config.debug = true
+
+config.nginx.workers = 4
 
 config.nginx.port = 8080
 

@@ -26,3 +26,4 @@
 	make clean dev   -- 生成开发环境的配置
 	make clean test  -- 生成测试环境的配置
 	make restart 	 -- 重新启动nginx
+	测试地址： curl http://localhost:8080/app/test?session=1-123

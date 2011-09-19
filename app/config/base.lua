@@ -10,7 +10,8 @@ _G.config = {
     session_timeout = 60 * 60 * 8,
 
     nginx = {
-        port=80,
+        port    = 80,
+        workers = 4,
     },
 
     redis_servers = {
@@ -21,6 +22,10 @@ _G.config = {
 
     database_servers = {
 
+    },
+
+    internal_ip = {
+        '127.0.0.1'
     }
 }
 

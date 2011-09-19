@@ -5,6 +5,7 @@
 --引用应用全局变量
 require("app.config.base")
 
+
 --引用公用模块
 util   = require("lib.functions")
 db     = require("lib.db")
@@ -71,7 +72,6 @@ local custid = tonumber(fields[1])
 local database, backend = get_db_info(custid)
 
 cgi.session = {custid = custid}
-
 
 --传递主程序需要的变量
 ngx.ctx.action      = action

@@ -22,7 +22,7 @@ end
 
 local today = date()
 
-today:setday(-1)
+today:adddays(-1)
 
 print(today)
 
